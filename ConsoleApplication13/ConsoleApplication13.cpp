@@ -275,5 +275,5 @@ int main() {
 	//e1.posibileprelungiri(10);
 	//cout << e1;
 
-	//afisaretip(e2, l2);
+	/*afisaretip(e2, l2);*/
 }
