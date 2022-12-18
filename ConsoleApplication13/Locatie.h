@@ -154,7 +154,7 @@ public:
 		}
 	}
 
-	//verifica stingatoare
+	//metoda verifica stingatoare
 
 	void verificastingatoare(Locatie l) {
 		if (l.nr_stingatoare > 0) cout << "EXISTA STINGATOARE URGENTA IN LOCATIE";
