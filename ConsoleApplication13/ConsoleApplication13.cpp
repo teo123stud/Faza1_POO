@@ -214,11 +214,11 @@ int main() {
 	Locatie l1;
 	Locatie l3(3, new int[3] { 5, 6, 7 }, 3, 3);
 	Locatie l2(2, new int[2] { 5, 6 }, 0, 0);
-	l2.setPaznici(3);
+	l2.setPaznici(6);
 	Locatie l4(l3);
 	Locatie l5;
 	l5 = l3;
-	Eveniment e1("Fotbal", sportiv, "14 decembrie", "12:00", l2, 100);
+	Eveniment e1("Fotbal", sportiv, "14 decembrie", "12:00", l3, 100);
 	Eveniment e4("Teatru", teatru, "14 decembrie", "12:00", l2, 100);
 	Eveniment e2(e1);
 	Eveniment e3;
@@ -274,4 +274,6 @@ int main() {
 
 	//e1.posibileprelungiri(10);
 	//cout << e1;
+
+	//afisaretip(e2, l2);
 }

@@ -13,7 +13,7 @@ private:
 	int* nr_locuri_pe_rand;
 	int nr_stingatoare;
 	int iesiri_urgenta;
-	static int paznici;
+	static int personal_paza;
 
 public:
 	
@@ -165,8 +165,8 @@ public:
 	
 	//metoda statica
 
-	static void setPaznici(int paznici) {
-		Locatie::paznici = paznici;
+	static void setPaznici(int personal_paza) {
+		Locatie::personal_paza = personal_paza;
 	}
 
 		
@@ -175,7 +175,7 @@ public:
 	friend ostream& operator<<(ostream& out, Locatie l);
 	friend istream& operator>>(istream& in, Locatie& l);
 };
-int Locatie::paznici = 0;
+int Locatie::personal_paza = 0;
 
 ostream& operator<<(ostream& out, Locatie l) {
 
@@ -188,7 +188,7 @@ ostream& operator<<(ostream& out, Locatie l) {
 	}
 	out << "Numarul de iesiri urgenta este: " << l.iesiri_urgenta << endl;
 	out << "Numarul de stingatoare este: " << l.nr_stingatoare << endl;
-	out << "Numarul de paznici: " << l.paznici << endl;
+	out << "Numarul de paznici: " << l.personal_paza << endl;
 	return out;
 }
 
