@@ -214,6 +214,7 @@ int main() {
 	Locatie l1;
 	Locatie l3(3, new int[3] { 5, 6, 7 }, 3, 3);
 	Locatie l2(2, new int[2] { 5, 6 }, 0, 0);
+	l2.setPaznici(3);
 	Locatie l4(l3);
 	Locatie l5;
 	l5 = l3;
@@ -226,7 +227,8 @@ int main() {
 	Bilet b2(b1);
 	Bilet b3;
 	b3 = b1;
-
+	cout << b1;
+	
 	/*bool da;
 	da=l2>=(l3);
 	if (da == true) {
