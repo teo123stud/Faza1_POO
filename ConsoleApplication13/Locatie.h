@@ -16,6 +16,8 @@ private:
 
 
 public:
+	
+	//constructor implicit
 
 	Locatie() {
 		nr_randuri = 0;
@@ -23,6 +25,8 @@ public:
 		nr_stingatoare = 0;
 		iesiri_urgenta = 0;
 	}
+
+	//constructor cu parametrii
 
 	Locatie(int nr_randuri, const int* nr_locuri_pe_rand, int nr_stingatoare, int iesiri_urgenta)
 	{
@@ -33,6 +37,8 @@ public:
 		this->nr_stingatoare = nr_stingatoare;
 		this->iesiri_urgenta = iesiri_urgenta;
 	}
+	
+	//constructor copiere
 
 	Locatie(const Locatie& l)
 	{
@@ -44,6 +50,8 @@ public:
 		this->iesiri_urgenta = l.iesiri_urgenta;
 
 	}
+
+	//supraincarcarea operatorului de atribuire
 
 	Locatie& operator=(const Locatie& l)
 	{
@@ -60,7 +68,7 @@ public:
 		return *this;
 	}
 
-
+	//getteri si setteri
 
 	void setNrRanduri(int nr_randuri)
 	{
@@ -112,6 +120,8 @@ public:
 		return this->iesiri_urgenta;
 	}
 
+	//destructor
+
 	~Locatie()
 	{
 		if (this->nr_locuri_pe_rand != NULL)
@@ -137,19 +147,23 @@ public:
 
 	//metoda verifica iesiri
 
-	void verificaiesiri() {
-		if (iesiri_urgenta > 0) cout << "EXISTA IESIRI URGENTA";
-		else "NU EXISTA IESIRI URGENTA";
+	void verificaiesiri(Locatie l) {
+		if (l.iesiri_urgenta > 0) cout << "EXISTA IESIRI URGENTA IN LOCATIE";
+		else {
+			cout << "NU EXISTA IESIRI URGENTA IN LOCATIE";
+		}
 	}
 
 	//verifica stingatoare
 
-	void verificastingatoare() {
-		if (nr_stingatoare > 0) cout << "EXISTA STINGATOARE URGENTA";
-		else "NU EXISTA STINGATOARE URGENTA";
+	void verificastingatoare(Locatie l) {
+		if (l.nr_stingatoare > 0) cout << "EXISTA STINGATOARE URGENTA IN LOCATIE";
+		else {
+			cout << "NU EXISTA STINGATOARE URGENTA IN LOCATIE";
+		}
 	}
 
-
+	//supraincarcarea operatorilor de citire si afisare
 
 	friend ostream& operator<<(ostream& out, Locatie l);
 	friend istream& operator>>(istream& in, Locatie& l);
@@ -159,6 +173,7 @@ ostream& operator<<(ostream& out, Locatie l) {
 
 	out << "Numarul de randuri este: " << l.nr_randuri << endl;
 	out << "Numarul de locuri pe rand este: ";
+	cout << endl;
 	for (int i = 0; i < l.nr_randuri; i++) {
 		out << l.nr_locuri_pe_rand[i] << " ";
 		out << endl;

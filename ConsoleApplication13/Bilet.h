@@ -28,6 +28,9 @@ private:
 
 
 public:
+	
+	//constructor implicit
+	
 	Bilet() :nr_bilet_vandut_zi(nr_bilete++) {
 		nume_client = new char[strlen("A") + 1];
 		strcpy_s(nume_client, strlen("A") + 1, "A");
@@ -39,14 +42,49 @@ public:
 
 	}
 
-	Bilet(const char* nume_client, int nr_loc, int nr_rand, tip_bilet tip, Eveniment even) :nr_bilet_vandut_zi(nr_bilete++) {
+	//constructor cu parametrii
+	
+	Bilet(const char* nume_client, int varsta, int nr_loc, int nr_rand, tip_bilet tip, Eveniment even) :nr_bilet_vandut_zi(nr_bilete++) {
 		this->nume_client = new char[strlen(nume_client) + 1];
 		strcpy_s(this->nume_client, strlen(nume_client) + 1, nume_client);
 		this->nr_loc = nr_loc;
 		this->nr_rand = nr_rand;
 		this->tip = tip;
 		this->even = even;
+		this->varsta = varsta;
+		if (varsta < 7) {
+			this->pret_bilet = 0;
 	}
+		else {
+			if (tip == vip) {
+				this->pret_bilet = 100;
+			}
+			if (tip == normal) {
+				this->pret_bilet = 50;
+			}
+			if (tip == categoria1) {
+				this->pret_bilet = 40;
+			}
+			if (tip == categoria2) {
+				this->pret_bilet = 30;
+			}
+			if (tip == loja) {
+				this->pret_bilet = 20;
+			}
+			if (tip == peluza) {
+				this->pret_bilet = 10;
+			}
+			if (tip == tribuna1) {
+				this->pret_bilet = 5;
+			}
+			if (tip == tribuna2) {
+				this->pret_bilet = 2;
+			}
+		}
+		
+	}
+
+	//constructor de copiere
 
 	Bilet(const Bilet& b) :nr_bilet_vandut_zi(nr_bilete++) {
 		this->nume_client = new char[strlen(b.nume_client) + 1];
@@ -57,7 +95,11 @@ public:
 		this->even = b.even;
 		this->tip = b.tip;
 		this->varsta = b.varsta;
+		
 	}
+
+	//supraincarcarea operatorului =
+	
 
 	Bilet& operator=(const Bilet& b) {
 		if (this != &b) {
@@ -75,7 +117,7 @@ public:
 		return *this;
 	}
 
-
+	//setteri si gatteri
 
 	void setNumeClient(const char* nume_client) {
 		if (this->nume_client != NULL)
@@ -90,34 +132,11 @@ public:
 		return copie;
 	}
 
-	void setPretBilet() {
-		if (tip == vip) {
-			this->pret_bilet = 100;
-		}
-		if (tip == normal) {
-			this->pret_bilet = 50;
-		}
-		if (tip == categoria1) {
-			this->pret_bilet = 40;
-		}
-		if (tip == categoria2) {
-			this->pret_bilet = 30;
-		}
-		if (tip == loja) {
-			this->pret_bilet = 20;
-		}
-		if (tip == peluza) {
-			this->pret_bilet = 10;
-		}
-		if (tip == tribuna1) {
-			this->pret_bilet = 5;
-		}
-		if (tip == tribuna2) {
-			this->pret_bilet = 2;
+	void setPretBilet(float pret_bilet) {
+		if (pret_bilet) {
+			this->pret_bilet = pret_bilet;
 		}
 	}
-
-
 
 	float getPretBilet() {
 		return this->pret_bilet;
@@ -160,21 +179,38 @@ public:
 	}
 
 
-
 	Eveniment getEveniment() {
 		return this->even;
 	}
 
+	void setLocatie(Locatie loc) {
+			this->loc = loc;
+	}
+
+	Locatie getLocatie() {
+		return this->loc;
+	}
+
+	int getNrBiletVandutZi() {
+		return this->nr_bilet_vandut_zi;
+	}
+
+	int getid_bilet() {
+			return this->id_bilet;
+	}
+	
+	//destructor 
 	~Bilet() {
 		if (this->nume_client != NULL)
 			delete this->nume_client;
 	}
 
-	//voucher_cadou
+	//meoda voucher_cadou
 
 	void voucher_cadou(int cod_voucher) {
 		if (cod_voucher == 1234) {
 			this->pret_bilet = pret_bilet - (pret_bilet * 10 / 100);
+			cout << "Pretul cu discount este: " << pret_bilet << endl;
 		}
 		else {
 			cout << "Codul voucherului este gresit.Nu ai reducere momentan! :( ";
@@ -183,19 +219,13 @@ public:
 
 	//metoda discount
 	void aplicarediscount() {
-		if (varsta < 14) {
+		if (varsta>=7 && varsta < 14) {
 			pret_bilet = pret_bilet - (pret_bilet * 20 / 100);
 			cout << "Pretul cu discount pentru adolescent este: " << pret_bilet << endl;
 		}
 	}
 
-	//metodagratuitatecopil
-
-	void aplicaregratuitate(int varsta) {
-		if (varsta < 7) pret_bilet = 0;
-		cout << "Bilet Gratuit pentru copil sub 7 ani" << endl;
-	}
-
+	
 
 	//operator cast
 
@@ -209,16 +239,9 @@ public:
 		copie.pret_bilet = copie.pret_bilet - 10;
 		return copie;
 	}
+	
 
-	//metoda verifica bilet valid
-
-
-	void verifica_bilet_valid(const int id_bil) {
-		if (this->id_bilet == id_bil) cout << "ID VALID";
-		else cout << "ID INVALID";
-	}
-
-	//generare bilet cu id aleator
+	//aici am scris o metoda de generare bilet cu id aleator
 
 	int id(Bilet& b) {
 
@@ -226,19 +249,22 @@ public:
 
 		for (int i = 1; i <= 5; i++) {
 			int random = 100 + (rand() % 101);
-			valideazaid(b, random);
 			return random;
 
 		}
 	}
 
-	void valideazaid(Bilet& b, int x) {
-		b.id_bilet = x;
+
+	//aici am inceput sa ma gandesc cum sa abordez faza 2, in acre trebuie sa verific daca biletul este valid
+	//iau in calcul crearea unui vector in care sa salvez id-urile create si apoi sa verific daca id-ul biletului introdus este valid, prin compararea cu elementele din vector
+
+
+	void verifica_bilet_valid(const int id_bil) {
+		if (this->id_bilet == id_bil) cout << "ID VALID";
+		else cout << "ID INVALID";
 	}
 
-
-
-
+	//supraincarcarea operatorilor de citire si afisare
 
 	friend ostream& operator<<(ostream& out, Bilet b);
 	friend istream& operator>>(istream& in, Bilet& b);
@@ -307,4 +333,3 @@ istream& operator>>(istream& in, Bilet& b) {
 	in >> b.even;
 	return in;
 }
-#pragma once

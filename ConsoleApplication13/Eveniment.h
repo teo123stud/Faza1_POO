@@ -27,7 +27,9 @@ private:
 
 
 public:
-
+	
+	//constructor implicit
+	
 	Eveniment() {
 		nume_eveniment = new char[strlen("A") + 1];
 		strcpy_s(nume_eveniment, strlen("A") + 1, "A");
@@ -40,7 +42,10 @@ public:
 
 	}
 
-	Eveniment(const char* nume_eveniment, string data, string ora, Locatie loc, int durata) {
+
+	//constructor cu parametrii
+	
+	Eveniment(const char* nume_eveniment, tip_eveniment teven, string data, string ora, Locatie loc, int durata) {
 		this->nume_eveniment = new char[strlen(nume_eveniment) + 1];
 		strcpy_s(this->nume_eveniment, strlen(nume_eveniment) + 1, nume_eveniment);
 		this->data = data;
@@ -58,10 +63,11 @@ public:
 			for (int j = 0; j < loc.getNrLocuriPeRand()[i]; j++)
 				matrice_loc[i][j] = 0;
 		this->matrice_loc = matrice_loc;
-
+		this->teven = teven;	
 	}
 
-
+	//constructor de copiere
+	
 	Eveniment(const Eveniment& e) {
 		this->nume_eveniment = new char[strlen(e.nume_eveniment) + 1];
 		strcpy_s(this->nume_eveniment, strlen(e.nume_eveniment) + 1, e.nume_eveniment);
@@ -83,6 +89,8 @@ public:
 		this->matrice_loc = matrice_loc;
 
 	}
+	
+	//supraincarcae operatorul =(de atribuire)
 
 	Eveniment& operator=(const Eveniment& e) {
 		if (this != &e) {
@@ -111,6 +119,8 @@ public:
 		return *this;
 	}
 
+	
+	//setteri si getteri
 
 	void setNumeEveniment(const char* nume_eveniment) {
 		if (this->nume_eveniment != NULL)
@@ -177,6 +187,11 @@ public:
 	tip_eveniment getTipEveniment() {
 		return this->teven;
 	}
+	
+
+	//acestea sunt gandite intr-un scenariu pentru teatru, daca i se ofera utilizatorului posibilitatea de a vedea actorii si
+	//intr-un scenariu pentru film, daca i se ofera utilizatorului posibilitatea de a vedea actorii 
+	//nu am realizat-o si pentru evenimentul sportiv pana in acest punct
 
 	void setNrActori(int nr_actori) {
 		if (nr_actori)
@@ -230,7 +245,8 @@ public:
 	}
 
 
-
+	//desctructor 
+	
 	~Eveniment() {
 		if (this->nume_eveniment != NULL)
 			delete this->nume_eveniment;
@@ -239,7 +255,7 @@ public:
 	//operator !
 
 	bool operator!() {
-		if (this->nr_locuri > 0) return true;
+		if (this->nr_locuri != 0) return true;
 		else return false;
 	}
 
@@ -249,13 +265,13 @@ public:
 		Eveniment copie = *this;
 		copie.nr_locuri = nr_locuri + valoare;
 		return copie;
-
 	}
 
-	//metoda posibile prelungiri
+	//metoda posibile prelungiri pentru un meci de fotbal
 
 	void posibileprelungiri(int minute_posibile_prelungiri) {
 		if (teven == sportiv) durata += minute_posibile_prelungiri;
+		cout << "Noua durata este: " << durata << endl;
 	}
 
 
@@ -285,17 +301,7 @@ public:
 		return ok;
 	}
 
-	void adaugaactoriteatru() {
-		if (teven == film) {
-			cout << "Introduceti numarul de actori: ";
-			cin >> nr_actori;
-			actori = new string[nr_actori];
-			for (int i = 0; i < nr_actori; i++) {
-				cout << "Introduceti numele actorului: ";
-				cin >> actori[i];
-			}
-		}
-	}
+	//urmaroarele metode functioneaza doar pentru cazul teatru
 
 
 	void afiseazaactoriteatru() {
@@ -306,18 +312,7 @@ public:
 		}
 	}
 
-	void adaugaprotagonisti() {
-		if (teven == film) {
-			cout << "Introduceti numarul de protagonisti: ";
-			cin >> nr_protagonisti;
-			protagonisti = new string[nr_protagonisti];
-			for (int i = 0; i < nr_protagonisti; i++) {
-				cout << "Introduceti numele protagonisitului: ";
-				cin >> protagonisti[i];
-			}
-		}
-	}
-
+	
 	void afiseazaprotagonisti() {
 		if (teven == film) {
 			protagonisti = new string[nr_protagonisti];
@@ -327,6 +322,7 @@ public:
 	}
 
 
+	//supraincarcarea operatorilor de citire si afisare
 
 	friend ostream& operator<<(ostream& out, Eveniment e);
 	friend istream& operator>>(istream& in, Eveniment& e);

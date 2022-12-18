@@ -8,6 +8,13 @@
 #include "Bilet.h"
 using namespace std;
 
+//prin aceasta functie, am abordat scenariile cerintei, prin care in functie de tipul biletului, utilizatorul poate rezerva doar anumite locuri si randuri, tinand cont de 
+//caracteristicile locatiei
+//utilizatorul alege evenimentul, tipul biletului si primeste precizari cu privire la ce locuri poate rezerva in functie de tip
+//daca introduce corect si lcoul este liber, se ocupa
+//in caz contrar, daca nu a introdus corect, i se arata mesajul 
+//daca locul este ocupat, i se arata matricea locului ocupata
+//la urmatoarea faza va fi facut cu un while, ca sa poate reincerca si se va ocupa si de alte functionalitati pe care le voi implementa ulterior
 
 void afisaretip(Eveniment& e, Locatie& l) {
 	cout << "Bine ai venit! Selecteaza tip eveniment!" << endl;
@@ -200,19 +207,69 @@ void afisaretip(Eveniment& e, Locatie& l) {
 	}
 
 
-
+	//teste penru toti constructorii, operatorii si functiile create in cele 3 clase
 
 int main() {
 
+	Locatie l1;
 	Locatie l3(3, new int[3] { 5, 6, 7 }, 3, 3);
-	Eveniment e2("Meci Galati", "13 dec", "14:00", l3, 40);
-	Bilet b3("Anap", 2, 3, vip, e2);
-	Bilet b4("Anap", 2, 3, vip, e2);
-	Bilet b5("Anap", 2, 3, vip, e2);
-	afisaretip(e2,l3);
+	Locatie l2(2, new int[2] { 5, 6 }, 0, 0);
+	Locatie l4(l3);
+	Locatie l5;
+	l5 = l3;
+	Eveniment e1("Fotbal", sportiv, "14 decembrie", "12:00", l2, 100);
+	Eveniment e4("Teatru", teatru, "14 decembrie", "12:00", l2, 100);
+	Eveniment e2(e1);
+	Eveniment e3;
+	e3 = e1;
+	Bilet b1("Popescu Ana", 8, 2, 3, normal, e1);
+	Bilet b2(b1);
+	Bilet b3;
+	b3 = b1;
 
-	
-	
-	
-	return 0;
+	/*bool da;
+	da=l2>=(l3);
+	if (da == true) {
+		cout << "DA";
+	}
+	else {
+		cout << "NU";
+	}*/
+
+	/*
+	bool ok;
+	ok = l4 == (l3);
+	if (ok == true) {
+		cout << "DA";
+	}
+	else {
+		cout << "NU";
+	}
+	*/
+
+	/*l2.verificaiesiri(l2);
+	l2.verificastingatoare(l2);*/
+
+
+	/*bool ok;
+	ok=!e2;
+	if (ok == true) {
+		cout << "DA";
+	}
+	else {
+		cout << "NU";
+	}
+	*/
+
+	/*
+	 e1 = e1+(2);
+	 cout << e1;*/
+
+
+	 //Bilet b5("Popescu Ana",11,2, 3, vip, e1);
+	 //b5 = b5 - (10);
+	 //cout << b5;
+
+	//e1.posibileprelungiri(10);
+	//cout << e1;
 }
