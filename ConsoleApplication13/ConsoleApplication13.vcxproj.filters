@@ -18,6 +18,9 @@
     <ClCompile Include="ConsoleApplication13.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Eveniment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Locatie.h">

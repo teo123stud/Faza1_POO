@@ -5,6 +5,8 @@
 #include <string.h>
 #include "Locatie.h"
 #include "Eveniment.h"
+#include <list>
+
 #define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 
@@ -84,7 +86,9 @@ public:
 		
 	}
 
-	//constructor de copiere
+
+	
+	
 
 	Bilet(const Bilet& b) :nr_bilet_vandut_zi(nr_bilete++) {
 		this->nume_client = new char[strlen(b.nume_client) + 1];
@@ -105,6 +109,7 @@ public:
 		if (this != &b) {
 			if (this->nume_client != NULL)
 				delete[] this->nume_client;
+			this->nume_client = nullptr;
 			this->nume_client = new char[strlen(b.nume_client) + 1];
 			strcpy_s(this->nume_client, strlen(b.nume_client) + 1, b.nume_client);
 			this->pret_bilet = b.pret_bilet;
@@ -207,9 +212,9 @@ public:
 
 	//meoda voucher_cadou
 
-	void voucher_cadou(int cod_voucher) {
+	void voucher_cadou(int pret, int cod_voucher) {
 		if (cod_voucher == 1234) {
-			this->pret_bilet = pret_bilet - (pret_bilet * 10 / 100);
+			this->pret_bilet = pret - (pret* 10 / 100);
 			cout << "Pretul cu discount este: " << pret_bilet << endl;
 		}
 		else {
@@ -218,14 +223,14 @@ public:
 	}
 
 	//metoda discount
-	void aplicarediscount() {
+	void aplicarediscount(int varsta) {
 		if (varsta>=7 && varsta < 14) {
 			pret_bilet = pret_bilet - (pret_bilet * 20 / 100);
 			cout << "Pretul cu discount pentru adolescent este: " << pret_bilet << endl;
 		}
 	}
 
-	
+
 
 	//operator cast
 
@@ -259,10 +264,13 @@ public:
 	//iau in calcul crearea unui vector in care sa salvez id-urile create si apoi sa verific daca id-ul biletului introdus este valid, prin compararea cu elementele din vector
 
 
-	void verifica_bilet_valid(const int id_bil) {
-		if (this->id_bilet == id_bil) cout << "ID VALID";
-		else cout << "ID INVALID";
-	}
+	//void verifica_bilet_valid(const int id_bil) {
+	//	if (this->id_bilet == id_bil) cout << "ID VALID";
+	//	else cout << "ID INVALID";
+	//}
+
+
+	
 
 	//supraincarcarea operatorilor de citire si afisare
 
@@ -275,6 +283,7 @@ int Bilet::nr_bilete = 0;
 ostream& operator<<(ostream& out, Bilet b)
 {
 	out << "Nume client: " << b.nume_client << endl;
+	out << "Varsta: " << b.varsta << endl;
 	out << "Pret bilet: " << b.pret_bilet << endl;
 	out << "Numar loc: " << b.nr_loc << endl;
 	out << "Numar rand: " << b.nr_rand << endl;
@@ -295,7 +304,10 @@ ostream& operator<<(ostream& out, Bilet b)
 
 }
 
-istream& operator>>(istream& in, Bilet& b) {
+
+
+istream& operator>>(istream& in, Bilet& b)
+{
 	cout << "Numele clientului este: ";
 	char buffer[50];
 	in >> buffer;
@@ -303,6 +315,8 @@ istream& operator>>(istream& in, Bilet& b) {
 		delete b.nume_client;
 	b.nume_client = new char[strlen(buffer) + 1];
 	strcpy_s(b.nume_client, strlen(buffer) + 1, buffer);
+	cout << "Varsta";
+	in >> b.varsta;
 	cout << "Pretul biletului este: ";
 	in >> b.pret_bilet;
 	cout << "Numarul locului este: ";
@@ -331,5 +345,19 @@ istream& operator>>(istream& in, Bilet& b) {
 
 	cout << "Evenimentul este: ";
 	in >> b.even;
+	
 	return in;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

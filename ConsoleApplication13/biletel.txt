@@ -1,0 +1,25 @@
+Numele evenimentului este: Fotbal
+Data este: 14 decembrie
+Ora este: 12:00
+Numarul de locuri este: 18
+Tip eveniment: sportiv
+Numarul de randuri este: 3
+Numarul de locuri pe rand este: 5 
+6 
+7 
+Numarul de iesiri urgenta este: 3
+Numarul de stingatoare este: 3
+Numarul de paznici: 0
+
+Durata este: 100
+Matrice locuri: 
+0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 0 
+Numarul de randuri este: 3
+Numarul de locuri pe rand este: 5 
+4 
+4 
+Numarul de iesiri urgenta este: 3
+Numarul de stingatoare este: 3
+Numarul de paznici: 0

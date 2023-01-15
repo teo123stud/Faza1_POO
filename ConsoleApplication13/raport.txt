@@ -1,0 +1,7 @@
+Numarul de randuri este: 3
+Numarul de locuri pe rand este: 5 
+6 
+7 
+Numarul de iesiri urgenta este: 3
+Numarul de stingatoare este: 3
+Numarul de paznici: 0

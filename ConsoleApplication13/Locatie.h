@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstring>
 #include <string.h>
+
 #define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 
@@ -96,7 +97,7 @@ public:
 		return this->nr_locuri_pe_rand;
 	}
 
-	void setNrStongatoare(int nr_stingatoare)
+	void setNrStingatoare(int nr_stingatoare)
 	{
 		if (nr_stingatoare) {
 			this->nr_stingatoare = nr_stingatoare;
@@ -108,6 +109,20 @@ public:
 		if (iesiri_urgenta) {
 			this->iesiri_urgenta = iesiri_urgenta;
 		}
+	}
+
+
+	void setLocuriOcupate(int x, int y) {
+			this->nr_locuri_pe_rand[x] = y;
+		
+	}
+
+	void afisareLocuriOcupate() {
+		{
+			for (int i = 0; i < this->nr_randuri; i++)
+				cout << "Randul " << i + 1 << " are " << this->nr_locuri_pe_rand[i] << " locuri ocupate" << endl;
+		}
+	
 	}
 
 	int getNrStingatoare()
@@ -208,3 +223,20 @@ istream& operator>>(istream& in, Locatie& l) {
 	in >> l.nr_stingatoare;
 	return in;
 }
+
+
+template <class T>
+
+T capacitate(T a, T b) {
+	return a * b;
+}
+
+
+
+
+
+
+
+
+
+

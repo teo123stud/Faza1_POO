@@ -4,6 +4,7 @@
 #include <cstring>
 #include <string.h>
 #include "Locatie.h"
+#include <list>
 #define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 
@@ -63,9 +64,26 @@ public:
 			for (int j = 0; j < loc.getNrLocuriPeRand()[i]; j++)
 				matrice_loc[i][j] = 0;
 		this->matrice_loc = matrice_loc;
-		this->teven = teven;	
 	}
-
+	Eveniment(const char* nume_eveniment, string data, string ora, Locatie loc, int durata) {
+		this->nume_eveniment = new char[strlen(nume_eveniment) + 1];
+		strcpy_s(this->nume_eveniment, strlen(nume_eveniment) + 1, nume_eveniment);
+		this->data = data;
+		this->ora = ora;
+		for (int i = 0; i < loc.getNrRanduri(); i++) {
+			this->nr_locuri += loc.getNrLocuriPeRand()[i];
+		}
+		this->locatie = loc;
+		this->durata = durata;
+		int** matrice_loc = new int* [loc.getNrRanduri()];
+		for (int i = 0; i < loc.getNrRanduri(); i++)
+			matrice_loc[i] = new int[loc.getNrLocuriPeRand()[i]];
+		for (int i = 0; i < loc.getNrRanduri(); i++)
+			for (int j = 0; j < loc.getNrLocuriPeRand()[i]; j++)
+				matrice_loc[i][j] = 0;
+		this->matrice_loc = matrice_loc;
+	}
+	
 	//constructor de copiere
 	
 	Eveniment(const Eveniment& e) {
@@ -187,6 +205,57 @@ public:
 	tip_eveniment getTipEveniment() {
 		return this->teven;
 	}
+
+
+	bool verifica_loc_liber(int** matrice_loc, int x, int y) {
+		bool ok = false;
+		if (x < locatie.getNrRanduri() && y < locatie.getNrLocuriPeRand()[x - 1]) {
+			if (matrice_loc[x - 1][y - 1] == 0) {
+				ok = true;
+			}
+			
+			
+	}
+		return ok;
+		
+	}
+	
+	void setMatrice(int** matrice_loc) {
+		if (this->matrice_loc != NULL) {
+			for (int i = 0; i < locatie.getNrRanduri(); i++)
+				delete[] this->matrice_loc[i];
+			delete[] this->matrice_loc;
+		}
+		this->matrice_loc = new int* [locatie.getNrRanduri()];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			this->matrice_loc[i] = new int[locatie.getNrLocuriPeRand()[i]];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			for (int j = 0; j < locatie.getNrLocuriPeRand()[i]; j++)
+				this->matrice_loc[i][j] = matrice_loc[i][j];
+		
+	}
+	
+	
+	int** getMatrice() {
+		int** copie = new int* [locatie.getNrRanduri()];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			copie[i] = new int[locatie.getNrLocuriPeRand()[i]];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			for (int j = 0; j < locatie.getNrLocuriPeRand()[i]; j++)
+				copie[i][j] = this->matrice_loc[i][j];
+		return copie;
+	}
+
+	int** getMatriceLoc() {
+		int** copie = new int* [locatie.getNrRanduri()];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			copie[i] = new int[locatie.getNrLocuriPeRand()[i]];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			for (int j = 0; j < locatie.getNrLocuriPeRand()[i]; j++)
+				copie[i][j] = this->matrice_loc[i][j];
+		return copie;
+		
+	}
 	
 
 	//acestea sunt gandite intr-un scenariu pentru teatru, daca i se ofera utilizatorului posibilitatea de a vedea actorii si
@@ -275,6 +344,8 @@ public:
 	}
 
 
+	
+
 	//metoda ocupa loc
 
 	bool OcupaLoc(Locatie& loc, int x, int y) {
@@ -297,8 +368,25 @@ public:
 				cout << endl;
 			}
 		}
-
 		return ok;
+	}
+
+	//setter ocupare matruce
+
+		
+		
+	
+	
+	//getter ocupare matrice
+	
+	int** getOcupareMatrice() {
+		int** copie = new int* [locatie.getNrRanduri()];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			copie[i] = new int[locatie.getNrLocuriPeRand()[i]];
+		for (int i = 0; i < locatie.getNrRanduri(); i++)
+			for (int j = 0; j < locatie.getNrLocuriPeRand()[i]; j++)
+				copie[i][j] = this->matrice_loc[i][j];
+		return copie;
 	}
 
 	//urmaroarele metode functioneaza doar pentru cazul teatru
@@ -311,6 +399,8 @@ public:
 				cout << actori[i] << endl;
 		}
 	}
+
+
 
 	
 	void afiseazaprotagonisti() {
@@ -383,4 +473,148 @@ istream& operator>>(istream& in, Eveniment& e) {
 	in >> e.durata;
 	return in;
 }
+
+class EvenimentTeatru :public Eveniment {
+private:
+	string actori;
+	
+public:
+	
+	EvenimentTeatru() :Eveniment() {
+		actori = "";
+	}
+
+	EvenimentTeatru(const char* nume_eveniment, tip_eveniment teven, string data, string ora, Locatie loc, int durata, string actori) :Eveniment( nume_eveniment,teven,data, ora,loc,durata) {
+		this->actori = actori;
+	}
+
+	EvenimentTeatru(const EvenimentTeatru& e) :Eveniment(e) {
+		this->actori = e.actori;
+	}
+
+	EvenimentTeatru& operator=(const EvenimentTeatru& e) {
+		Eveniment::operator=(e);
+		this->actori = e.actori;
+		return *this;
+	}
+
+	~EvenimentTeatru() {
+		actori = "";
+	}
+
+	string getActori() {
+		return actori;
+	}
+
+	void setActori(string actori) {
+		this->actori = actori;
+	}
+
+	friend ostream& operator<<(ostream& out, EvenimentTeatru e);
+	friend istream& operator>>(istream& in, EvenimentTeatru& e);
+};
+
+ostream& operator<<(ostream& out, EvenimentTeatru e) {
+	out << (Eveniment)e;
+	out << "Actori: " << e.actori << endl;
+	return out;
+}
+
+istream& operator>>(istream& in, EvenimentTeatru& e) {
+	in >> (Eveniment&)e;
+	cout << "Actori: ";
+	in >> e.actori;
+	return in;
+}
+
+
+
+	
+class VirtualEvenimenimentSportiv {
+protected:
+	int nr_jucatori;
+	int nr_rezerve;
+	string suprafata_joc;
+	
+	public:
+		virtual int jucatori() = 0;
+		virtual int rezerve() = 0;
+		virtual string suprafata();
+		virtual void afiseaza();
+
+		
+		
+};
+
+
+string VirtualEvenimenimentSportiv::suprafata()
+{
+	return string();
+}
+
+void VirtualEvenimenimentSportiv::afiseaza()
+{
+	
+}
+
+class Fotbal : public VirtualEvenimenimentSportiv {
+	
+public:
+	int jucatori() {
+		return 11;
+	}
+	int rezerve() {
+		return 7;
+	}
+	string suprafata() {
+		return "gazon";
+	}
+	void afiseaza() {
+		cout << "Jucatori: " << jucatori() << endl;
+		cout << "Rezerve: " << rezerve() << endl;
+		cout << "Suprafata: " << suprafata() << endl;
+	}
+	
+};
+	
+class Handbal : public VirtualEvenimenimentSportiv {
+	
+	public:
+	int jucatori() 
+	{
+		return 7;
+	}
+	int rezerve() {
+		return 5;
+	}
+	string suprafata() {
+		return "gazon";
+	}
+	void afiseaza() {
+		cout << "Jucatori: " << jucatori() << endl;
+		cout << "Rezerve: " << rezerve() << endl;
+		cout << "Suprafata: " << suprafata() << endl;
+	}
+};
+
+class Volei : public VirtualEvenimenimentSportiv {
+	
+	public:
+	int jucatori() 
+	{
+		return 6;
+	}
+	int rezerve() {
+		return 6; 
+	}
+	string suprafata() {
+		return "gazon";
+	}
+	void afiseaza() {
+		cout << "Jucatori: " << jucatori() << endl;
+		cout << "Rezerve: " << rezerve() << endl;
+		cout << "Suprafata: " << suprafata() << endl;
+	}
+};
+
 
