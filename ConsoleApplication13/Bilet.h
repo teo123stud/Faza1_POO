@@ -212,7 +212,7 @@ public:
 
 	//meoda voucher_cadou
 
-	void voucher_cadou(int pret, int cod_voucher) {
+	void voucher_cadou(float pret, int cod_voucher) {
 		if (cod_voucher == 1234) {
 			this->pret_bilet = pret - (pret* 10 / 100);
 			cout << "Pretul cu discount este: " << pret_bilet << endl;

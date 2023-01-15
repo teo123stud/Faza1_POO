@@ -20,8 +20,6 @@ Eveniment e5("Steaua-Dinamo", sportiv, "11/02/2022", "13:00", l5, 100);
 
 
 
-
-
 void bilet(Eveniment e1, Locatie l1, int loc, int rand) {
 	cout << "Creeaza bilet" << endl;
 	char* nume_client;
@@ -57,7 +55,6 @@ Eveniment e5("Steaua-Dinamo", sportiv, "11/02/2022", "13:00", l5, 100);
 	f.close();
 	cout << b1;
 }
-
 
 
 
@@ -760,6 +757,7 @@ void meniu_mic() {
 	cout << "---------------------------------";
 	cout << endl;
 	cout << "Esti administrator sau client? ";
+	cout << endl;
 	cout << "----------------------------------";
 	cout << endl;
 	cout << "1. Administrator";
@@ -774,8 +772,11 @@ void meniu_mic() {
 	case 1:
 		cout << "Alege optiune: ";
 		cout << "1.Vezi bilete existente";
+		cout << endl;
 		cout << "2.Verifica existenta ID bilet";
+		cout << endl;
 		cout << "3.Creeaza o locatie";
+		cout << endl;
 		cout << "4.Creeaza un eveniment";
 		int gr;
 		cin >> gr;
