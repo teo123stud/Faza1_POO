@@ -35,26 +35,44 @@ Eveniment e5("Steaua-Dinamo", sportiv, "11/02/2022", "13:00", l5, 100);
 	m.open("BileteSalvate");
 	m << b1;
 	m.close();
-	ofstream f("bile1.bin", ios::binary | ios::out);
-	f.write((char*)&b1, sizeof(Bilet));
-	f.close();
+	b1.scriereBinar("bile1.bin");
 	cout << "-----------";
 	cout << "Biletul a fost creat cu succes!" << endl;
 	cout << "-----------";
+	ifstream f("bile1.bin", ios::binary | ios::in);
+	Bilet b;
+	Eveniment e;
+	b.citireBinar("bile1.bin");
+
 }
-//	//void bilete_existente() {
-//	ifstream f("bile1.bin", ios::binary | ios::in);
-//	Bilet b1;
-//	f.read((char*)&b1, sizeof(Bilet));
-//	f.close();
-//}
-void afisare_bilete() {
-	ifstream f("bile1.dat", ios::binary | ios::in);
-	Bilet b1;
-	f.read((char*)&b1, sizeof(Bilet));
-	f.close();
-	cout << b1;
+void afisare_bilete() {
+	ifstream f("bile1.bin", ios::binary | ios::in);
+	Bilet b;
+	Eveniment e;
+	b.citireBinar("bile1.bin");
+
 }
+
+
+void verifica_id_bilet() {
+	{
+		int id;
+		cout << "Introduceti id-ul biletului pe care doriti sa il verificati: ";
+		cin >> id;
+		ifstream f("bile1.bin");
+		Bilet b;
+		b.citireBinar("bile1.bin");
+		if (id == b.getid_bilet()) {
+			cout << "Biletul cu id-ul " << id << " exista in baza de date!" << endl;
+		}
+		else {
+			cout << "Biletul cu id-ul " << id << " nu exista in baza de date!" << endl;
+		}
+		f.close();
+	}
+}
+
+
 
 
 
@@ -93,7 +111,7 @@ void afisaretip() {
 					int r, s;
 					cout << "Rand: ";
 					cin >> r;
-					cout << "Loc";
+					cout << "Loc: ";
 					cin >> s;
 					if (r != 1 && s >= 1) {
 						if (r <= l3.getNrRanduri() && s <= l3.getNrLocuriPeRand()[r - 1]) {
@@ -154,7 +172,7 @@ void afisaretip() {
 				int rs, sr;
 				cout << "Rand: ";
 				cin >> rs;
-				cout << "Loc";
+				cout << "Loc: ";
 				cin >> sr;
 				if (rs != 1 && sr >= 1) {
 
@@ -257,6 +275,7 @@ void afisaretip() {
 					cout << "Nu ai introdus loc VIP";
 					cout << endl;
 				}
+				break;
 			}
 			if (optiuneata2 == 2) {
 				cout << "Randul 1, locurile de la 1 la " << l3.getNrLocuriPeRand()[0] << endl;
@@ -264,9 +283,9 @@ void afisaretip() {
 				int mn, nm;
 				cout << "Rand: ";
 				cin >> mn;
-				cout << "Loc";
+				cout << "Loc: ";
 				cin >> nm;
-				if (mn == 1 && nm >= 1 && mn <= l3.getNrLocuriPeRand()[mn - 1]) {
+				if (mn == 1 && nm >= 1 && nm <= l3.getNrLocuriPeRand()[mn - 1]) {
 					ifstream f("Titanic.txt", ios::in);
 					int** matrice = new int* [l3.getNrRanduri()];
 					for (int i = 0; i < l3.getNrRanduri(); i++) {
@@ -303,6 +322,7 @@ void afisaretip() {
 				}
 
 			}
+			break;
 		}
 
 		break;
@@ -329,7 +349,7 @@ void afisaretip() {
 				cin >> t;
 				cout << "Loc: ";
 				cin >> ft;
-				if (t == 1 || t == 2 && ft != 1 && ft < l4.getNrLocuriPeRand()[t - 1]) {
+				if (t == 1 || t == 2 && ft != 1 && ft <= l4.getNrLocuriPeRand()[t - 1]) {
 					ifstream f("Nebuni.txt", ios::in);
 					int** matrice = new int* [l4.getNrRanduri()];
 					for (int i = 0; i < l4.getNrRanduri(); i++) {
@@ -364,6 +384,7 @@ void afisaretip() {
 					cout << "Locul nu este disponibil!" << endl;
 				}
 			}
+			break;
 		}
 		if (c == 2) {
 			cout << "Alege piesa teatru la TNB";
@@ -379,7 +400,7 @@ void afisaretip() {
 				cin >> u;
 				cout << "Loc: ";
 				cin >> p;
-				if (p > 1 && p < l4.getNrLocuriPeRand()[u - 1] && u>2 && u < l4.getNrRanduri()) {
+				if (p > 1 && p <- l4.getNrLocuriPeRand()[u - 1] && u>2 && u <=l4.getNrRanduri()) {
 					ifstream f("Nebuni.txt", ios::in);
 					int** matrice = new int* [l4.getNrRanduri()];
 					for (int i = 0; i < l4.getNrRanduri(); i++) {
@@ -415,6 +436,7 @@ void afisaretip() {
 
 				}
 			}
+			break;
 		}
 
 		if (c == 3) {
@@ -494,7 +516,7 @@ void afisaretip() {
 				cin >> v;
 				cout << "Loc: ";
 				cin >> o;
-				if (o == 1 && o == l5.getNrLocuriPeRand()[v - 1] && v >= 1 && v <= l5.getNrRanduri()) {
+				if (o== 1 || o == l5.getNrLocuriPeRand()[v - 1] && v >= 1 && v <= l5.getNrRanduri()) {
 					ifstream f("Meci.txt", ios::in);
 					int** matrice = new int* [l5.getNrRanduri()];
 					for (int i = 0; i < l5.getNrRanduri(); i++) {
@@ -584,6 +606,7 @@ void afisaretip() {
 						cout << endl;
 					}
 				}
+				break;
 			}
 			if (d == 3) {
 				cout << "Alege eveniment sportiv:";
@@ -771,31 +794,22 @@ void meniu_mic() {
 	{
 	case 1:
 		cout << "Alege optiune: ";
-		cout << "1.Vezi bilete existente";
+		cout << "1.Vezi bilete existente!";
 		cout << endl;
-		cout << "2.Verifica existenta ID bilet";
+		cout << "2.Verifica daca un ID este valid!";
 		cout << endl;
-		cout << "3.Creeaza o locatie";
+		cout << "3.Creeaza o locatie!";
 		cout << endl;
-		cout << "4.Creeaza un eveniment";
+		cout << "4.Creeaza un eveniment!";
 		int gr;
 		cin >> gr;
 		if (gr == 1) {
-			ifstream f1("BileteSalvate.txt", ios::in);
-			if (f1.is_open())
-			{
-				string linie;
-				while (getline(f1, linie))
-				{
-					cout << linie << endl;
-				}
-				f1.close();
-			}
+			afisare_bilete();
 		}
 		if (gr == 2) {
 			int h;
 			cin >> h;
-			cout << "Verifica bilet!";
+			verifica_id_bilet();
 		}
 		if (gr == 3) {
 			int nr_randuri;
@@ -839,7 +853,7 @@ void meniu_mic() {
 		cout << endl;
 		cout << "2.Vezi evenimentele ce se desfasoara in curand";
 		cout << endl;
-		cout << "3. Informatii despre evenimentul sportiv";
+		cout << "3.Informatii despre evenimentul sportiv";
 		cout << endl;
 		cout << "4.Vezi discount-uri:";
 		cout << endl;
@@ -955,7 +969,6 @@ void meniu_mic() {
 	
 		int main() {
 
-		
 			meniu_mic();
 	
 		}

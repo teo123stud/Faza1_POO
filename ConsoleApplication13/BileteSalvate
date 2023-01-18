@@ -1,0 +1,26 @@
+Nume client: ion
+Varsta: 3
+Pret bilet: 0
+Numar loc: 2
+Numar rand: 1
+Tip bilet: normal
+Eveniment: Numele evenimentului este: Titanic
+Data este: 11/02/2022
+Ora este: 13:00
+Numarul de locuri este: 18
+Tip eveniment: film
+Numarul de randuri este: 3
+Numarul de locuri pe rand este: 5 
+6 
+7 
+Numarul de iesiri urgenta este: 3
+Numarul de stingatoare este: 3
+Numarul de paznici: 0
+
+Durata este: 100
+Matrice locuri: 
+0 1 0 0 1 
+1 0 1 1 1 0 
+0 0 0 1 0 0 0 
+Id bilet: 126
+ Nr bilete vandute azi: 2

@@ -230,7 +230,49 @@ public:
 		}
 	}
 
+	//citire binar
 
+
+
+	void citireBinar(string nume) {
+		ifstream h(nume, ios::in | ios::binary);
+		if (h.is_open()) {
+			if (this->nume_client != NULL)
+			{
+				delete[] this->nume_client;
+			}
+			int dimNume = 0;
+			h.read((char*)&dimNume, sizeof(dimNume));
+			this->nume_client = new char[dimNume + 1];
+			h.read(this->nume_client, static_cast<std::streamsize>(dimNume) + 1);
+			cout << "Nume client: " << this->nume_client << endl;
+			h.read((char*)&this->nr_loc, sizeof(this->nr_loc));
+			cout << "Locul: " << this->nr_loc << endl;
+			h.read((char*)&this->nr_rand, sizeof(this->nr_rand));
+			cout << "Randul: " << this->nr_rand << endl;
+			//citeste id_bilet
+			h.read((char*)&this->id_bilet, sizeof(this->id_bilet));
+			cout << "ID: " << this->id_bilet << endl;
+
+		}
+	}
+
+	//scriere binar
+
+	void scriereBinar(string nume) {
+		ofstream h(nume, ios::out | ios::binary);
+		if (h.is_open()) {
+			int dimNume = strlen(this->nume_client);
+			h.write((char*)&dimNume, sizeof(dimNume));
+			h.write(this->nume_client, static_cast<std::streamsize>(dimNume) + 1);
+			h.write((char*)&this->nr_loc, sizeof(this->nr_loc));
+			h.write((char*)&this->nr_rand, sizeof(this->nr_rand));
+			this->id_bilet = getId();
+			h.write((char*)&this->id_bilet, sizeof(this->id_bilet));
+		}
+	}
+
+	
 
 	//operator cast
 
@@ -246,9 +288,14 @@ public:
 	}
 	
 
+	int getId() {
+		this->id_bilet = id();
+		return this->id_bilet;
+	}
+
 	//aici am scris o metoda de generare bilet cu id aleator
 
-	int id(Bilet& b) {
+	int id() {
 
 		srand((unsigned)time(NULL));
 
@@ -298,7 +345,7 @@ ostream& operator<<(ostream& out, Bilet b)
 	case 7:out << "Tip bilet: peluza " << endl; break;
 	}
 	out << "Eveniment: " << b.even;
-	out << "Id bilet: " << b.id(b) << endl;
+	out << "Id bilet: " << b.getId() << endl;
 	out << " Nr bilete vandute azi: " << b.nr_bilet_vandut_zi << endl;
 	return out;
 
