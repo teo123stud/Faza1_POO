@@ -916,6 +916,7 @@ void meniu_mic() {
 			cout << "2.Handbal";
 			cout << endl;
 			cout << "3.Volei";
+			cout << endl;
 			cout << "Introdu optiunea ta: ";
 			int gt;
 			cin >> gt;
